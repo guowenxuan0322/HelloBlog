@@ -1,9 +1,11 @@
 package net.evercodig.helloblog;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class HelloBlogApplication {
     public static void main(String[] args) {
-        System.out.println("ok");
-        System.out.println("no");
+        SpringApplication.run(HelloBlogApplication.class,args);
     }
-
 }
