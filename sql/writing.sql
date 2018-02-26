@@ -18,8 +18,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for writings
 -- ----------------------------
-DROP TABLE IF EXISTS `writings`;
-CREATE TABLE `writings` (
+DROP TABLE IF EXISTS `writing`;
+CREATE TABLE `writing` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `heading` varchar(255) NOT NULL,
   `content` varchar(255) NOT NULL,
