@@ -2,6 +2,7 @@ package net.evercodig.helloblog.service.impl;
 
 import net.evercodig.helloblog.dao.WritingDao;
 import net.evercodig.helloblog.pojo.Writing;
+import net.evercodig.helloblog.pojo.WritingVO;
 import net.evercodig.helloblog.service.WritingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class WritingServiceImpl implements WritingService {
     }
 
     @Override
-    public List<Writing> selectWritingByAuthorAndHeading(String author, String heading) {
+    public List<Writing> selectWritingByAuthorAndHeading(String heading,String author) {
         Map<String, String> findMap = new HashMap<String, String>();
         findMap.put("author", author);
         findMap.put("heading", heading);
@@ -35,11 +36,11 @@ public class WritingServiceImpl implements WritingService {
     }
 
     @Override
-    public void insertWriting(String heading, String content, String author) {
+    public void insertWriting(WritingVO writingVO) {
         Writing writing = new Writing();
-        writing.setHeading(heading);
-        writing.setContent(content);
-        writing.setAuthor(author);
+        writing.setHeading(writingVO.getHeading());
+        writing.setContent(writingVO.getContent());
+        writing.setAuthor(writingVO.getAuthor());
         writing.setInittime(System.currentTimeMillis());
         writing.setChangetime(System.currentTimeMillis());
 
@@ -48,12 +49,12 @@ public class WritingServiceImpl implements WritingService {
     }
 
     @Override
-    public void updateWriting(Integer id, String heading, String content, String author) {
+    public void updateWriting(WritingVO writingVO) {
         Writing writing = new Writing();
-        writing.setId(id);
-        writing.setHeading(heading);
-        writing.setContent(content);
-        writing.setAuthor(author);
+        writing.setId(writingVO.getId());
+        writing.setHeading(writingVO.getHeading());
+        writing.setContent(writingVO.getContent());
+        writing.setAuthor(writingVO.getAuthor());
         writing.setChangetime(System.currentTimeMillis());
         int i = writingDao.updateByPrimaryKeySelective(writing);
         System.out.println(i);
