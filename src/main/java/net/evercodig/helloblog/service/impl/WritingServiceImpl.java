@@ -26,7 +26,7 @@ public class WritingServiceImpl implements WritingService {
     }
 
     @Override
-    public List<Writing> selectWritingByAuthorAndHeading(String heading,String author) {
+    public List<Writing> selectWritingByAuthorAndHeading(String heading, String author) {
         Map<String, String> findMap = new HashMap<String, String>();
         findMap.put("author", author);
         findMap.put("heading", heading);
@@ -49,9 +49,9 @@ public class WritingServiceImpl implements WritingService {
     }
 
     @Override
-    public void updateWriting(WritingVO writingVO) {
+    public void updateWriting(WritingVO writingVO, Integer id) {
         Writing writing = new Writing();
-        writing.setId(writingVO.getId());
+        writing.setId(id);
         writing.setHeading(writingVO.getHeading());
         writing.setContent(writingVO.getContent());
         writing.setAuthor(writingVO.getAuthor());

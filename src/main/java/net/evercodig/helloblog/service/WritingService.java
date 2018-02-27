@@ -13,5 +13,5 @@ public interface WritingService {
 
     void insertWriting(WritingVO writingVO);
 
-    void updateWriting(WritingVO writingVO);
+    void updateWriting(WritingVO writingVO, Integer id);
 }
