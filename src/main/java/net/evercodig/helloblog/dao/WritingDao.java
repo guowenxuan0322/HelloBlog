@@ -21,4 +21,8 @@ public interface WritingDao {
     int updateByPrimaryKey(Writing record);
 
     List<Writing> selectByAuthorAndHeading(Map findMap);
+
+    int selectTotalCount();
+
+    List<Writing> selectWritingPage(Map limitMap);
 }

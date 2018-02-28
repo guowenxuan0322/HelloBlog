@@ -3,7 +3,7 @@
 <mapper namespace="net.evercodig.helloblog.dao.WritingDao">
     <resultMap id="BaseResultMap" type="net.evercodig.helloblog.pojo.Writing">
         <constructor>
-            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <idArg column="id" jdbcType="INTEGER" javaType="Integer"/>
             <arg column="heading" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="author" jdbcType="VARCHAR" javaType="java.lang.String"/>
@@ -105,12 +105,11 @@
       changeTime = #{changetime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
     <select id="selectByAuthorAndHeading" parameterType="java.util.Map" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
-        writing
+            writing
         WHERE
         <if test="author != null">
             author like "%"#{author,jdbcType=VARCHAR}"%"
@@ -120,5 +119,16 @@
             heading like "%"#{heading,jdbcType=VARCHAR}"%"
         </if>
     </select>
-
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        SELECT
+          count(1)
+        FROM
+          writing
+    </select>
+    <select id="selectWritingPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM
+          writing limit #{begin} , #{limit}
+    </select>
 </mapper>

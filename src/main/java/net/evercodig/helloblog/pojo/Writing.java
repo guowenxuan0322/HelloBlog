@@ -2,7 +2,7 @@ package net.evercodig.helloblog.pojo;
 
 public class Writing {
     private Integer id;
-
+    
     private String heading;
 
     private String content;

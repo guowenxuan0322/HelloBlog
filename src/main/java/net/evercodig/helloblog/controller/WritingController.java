@@ -1,5 +1,6 @@
 package net.evercodig.helloblog.controller;
 
+import net.evercodig.helloblog.pojo.PageBean;
 import net.evercodig.helloblog.pojo.Writing;
 import net.evercodig.helloblog.pojo.WritingVO;
 import net.evercodig.helloblog.service.WritingService;
@@ -32,8 +33,14 @@ public class WritingController {
         writingService.insertWriting(writingVO);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updateWriting(@RequestBody WritingVO writingVO, @PathVariable Integer id) {
-        writingService.updateWriting(writingVO, id);
+    @RequestMapping(value = "/{id:\\d+}", method = RequestMethod.PUT)
+    public void updateWriting(@PathVariable Integer id, @RequestBody WritingVO writingVO) {
+        writingService.updateWriting(id, writingVO);
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public PageBean<Writing> findPage(@RequestParam int page, @RequestParam int limit) {
+        PageBean<Writing> writingPageBean = writingService.findPage(page, limit);
+        return writingPageBean;
     }
 }

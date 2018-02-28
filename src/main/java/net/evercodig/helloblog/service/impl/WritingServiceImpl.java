@@ -1,6 +1,7 @@
 package net.evercodig.helloblog.service.impl;
 
 import net.evercodig.helloblog.dao.WritingDao;
+import net.evercodig.helloblog.pojo.PageBean;
 import net.evercodig.helloblog.pojo.Writing;
 import net.evercodig.helloblog.pojo.WritingVO;
 import net.evercodig.helloblog.service.WritingService;
@@ -15,12 +16,12 @@ import java.util.Map;
 @Service
 @Transactional
 public class WritingServiceImpl implements WritingService {
+
     @Autowired
     WritingDao writingDao;
 
-
     @Override
-    public Writing selectWritingById(Integer id) {
+    public Writing selectWritingById(int id) {
         Writing writing = writingDao.selectByPrimaryKey(id);
         return writing;
     }
@@ -49,7 +50,7 @@ public class WritingServiceImpl implements WritingService {
     }
 
     @Override
-    public void updateWriting(WritingVO writingVO, Integer id) {
+    public void updateWriting(Integer id, WritingVO writingVO) {
         Writing writing = new Writing();
         writing.setId(id);
         writing.setHeading(writingVO.getHeading());
@@ -58,6 +59,35 @@ public class WritingServiceImpl implements WritingService {
         writing.setChangetime(System.currentTimeMillis());
         int i = writingDao.updateByPrimaryKeySelective(writing);
         System.out.println(i);
+    }
+
+    @Override
+    public PageBean<Writing> findPage(int page, int limit) {
+        //查询总记录数
+        int totalCount = writingDao.selectTotalCount();
+        //计算总页数
+        int totalPage;
+        if (totalCount % limit == 0) {
+            totalPage = totalCount / limit;
+        } else {
+            totalPage = (totalCount / limit) + 1;
+        }
+        //计算 从第几条开始
+        int begin = (page - 1) * limit;
+        //查询记录
+        final HashMap<String, Integer> limitMap = new HashMap<String, Integer>();
+        limitMap.put("begin", begin);
+        limitMap.put("limit", limit);
+        List<Writing> writings = writingDao.selectWritingPage(limitMap);
+        //封装分页实体
+        PageBean<Writing> writingPageBean = new PageBean<>();
+        writingPageBean.setLimit(limit);
+        writingPageBean.setPage(page);
+        writingPageBean.setTotalCount(totalCount);
+        writingPageBean.setTotalPage(totalPage);
+        writingPageBean.setList(writings);
+
+        return writingPageBean;
     }
 
 

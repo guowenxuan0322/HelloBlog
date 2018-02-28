@@ -10,7 +10,9 @@ public class test {
         map.put("b","李四");
         ArrayList<String> list = new ArrayList<String>();
         list.add("a");
-
-        System.out.println(map);
+        double a=10/3;
+        Double c = Math.ceil(a);
+        System.out.println(a);
+        System.out.println(c);
     }
 }
