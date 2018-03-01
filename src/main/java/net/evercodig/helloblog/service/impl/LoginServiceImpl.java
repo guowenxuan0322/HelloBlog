@@ -1,6 +1,6 @@
 package net.evercodig.helloblog.service.impl;
 
-import net.evercodig.helloblog.common.MD5;
+import net.evercodig.helloblog.common.MD5Util;
 import net.evercodig.helloblog.dao.LoginDao;
 import net.evercodig.helloblog.pojo.User;
 import net.evercodig.helloblog.pojo.UserVO;
@@ -8,6 +8,7 @@ import net.evercodig.helloblog.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import net.evercodig.helloblog.common.LoginState;
 
 @Service
 @Transactional
@@ -21,19 +22,17 @@ public class LoginServiceImpl implements LoginService {
         User user = new User();
         user.setUsername(userVO.getUsername());
         try{
-            User findUser = loginDao.findUserByName(user);
+            User findUser = loginDao.findUserByName(userVO.getUsername());
             String password = userVO.getPassword();
-            password = MD5.getMD5(password);
+            password = MD5Util.generate(password);
             String findPassword = findUser.getPassword();
-            System.out.println("password=="+password);
-            System.out.println("findPassword=="+findPassword);
             if (password.equals(findPassword)) {
-                return "登录成功";
+                return LoginState.Succed.name();
             }else{
-                return "登录失败,密码错误";
+                return LoginState.Fail.name();
             }
         }catch (Exception e){
-            return "用户名错误";
+            return LoginState.Error.name();
         }
     }
 }

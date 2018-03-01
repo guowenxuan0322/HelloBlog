@@ -2,6 +2,8 @@ package net.evercodig.helloblog.service.impl;
 
 
 import net.evercodig.helloblog.common.MD5;
+import net.evercodig.helloblog.common.MD5Util;
+import net.evercodig.helloblog.common.UserState;
 import net.evercodig.helloblog.dao.UserDao;
 import net.evercodig.helloblog.pojo.User;
 import net.evercodig.helloblog.pojo.UserVO;
@@ -12,15 +14,15 @@ import net.evercodig.helloblog.service.UserService;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDao userDao;
 
     @Override
-    public String userSave(UserVO userVO){
+    public String userSave(UserVO userVO) {
         String password = userVO.getPassword();
-        password = MD5.getMD5(password);
+        password = MD5Util.generate(password);
         User user = new User();
         user.setUsername(userVO.getUsername());
         user.setPassword(password);
@@ -28,10 +30,10 @@ public class UserServiceImpl implements UserService{
         user.setChangetime(System.currentTimeMillis());
         int i = userDao.insert(user);
         String result;
-        if(i != 0){
-            result = "保存成功";
-        }else{
-            result = "保存失败";
+        if (i != 0) {
+            result = UserState.Success.name();
+        } else {
+            result = UserState.Fail.name();
         }
         return result;
     }
@@ -47,10 +49,10 @@ public class UserServiceImpl implements UserService{
         user.setChangetime(System.currentTimeMillis());
         int i = userDao.updateByPrimaryKeySelective(user);
         String result;
-        if(i != 0){
-            result = "保存成功";
-        }else{
-            result = "保存失败";
+        if (i != 0) {
+            result = UserState.Success.name();
+        } else {
+            result = UserState.Fail.name();
         }
         return result;
     }

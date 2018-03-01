@@ -9,17 +9,17 @@ import net.evercodig.helloblog.service.UserService;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    UserService Uservice;
+    UserService UserService;
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String saveUser(@RequestBody UserVO userVO){
-        String result = Uservice.userSave(userVO);
+        String result = UserService.userSave(userVO);
         return result;
     }
 
-    @RequestMapping(value = "/update/{id}" ,method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}" ,method = RequestMethod.PUT)
     public String updateUser(@PathVariable Integer id, @RequestBody UserVO userVO){
-        String result = Uservice.userUpdate(userVO);
+        String result = UserService.userUpdate(userVO);
         return result;
     }
 }
