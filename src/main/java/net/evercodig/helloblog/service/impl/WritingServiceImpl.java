@@ -75,9 +75,6 @@ public class WritingServiceImpl implements WritingService {
         //计算 从第几条开始
         int begin = (page - 1) * limit;
         //查询记录
-        /*final HashMap<String, Integer> limitMap = new HashMap<String, Integer>();
-        limitMap.put("begin", begin);
-        limitMap.put("limit", limit);*/
         List<Writing> writings = writingDao.selectWritingPage(begin, limit);
         //封装分页实体
         PageBean<Writing> writingPageBean = new PageBean<>();

@@ -1,17 +1,23 @@
 package net.evercodig.helloblog.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import net.evercodig.helloblog.pojo.UserVO;
+import net.evercodig.helloblog.service.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * 登录 先查询 后比对
+ */
 @RestController
 @RequestMapping("/login")
 public class LoginController {
 
+    @Autowired
+    LoginService loginService;
+
     @RequestMapping(method = RequestMethod.POST)
-    public String login(@RequestParam String username, @RequestParam String password){
-        
-        return null;
+    public String login(@RequestBody UserVO userVO){
+        String result = loginService.compare(userVO);
+        return result;
     }
 }
