@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public String userSave(UserVO userVO) {
+    public UserState userSave(UserVO userVO) {
         String password = userVO.getPassword();
         password = MD5Util.generate(password);
         User user = new User();
@@ -29,17 +29,17 @@ public class UserServiceImpl implements UserService {
         user.setInintime(System.currentTimeMillis());
         user.setChangetime(System.currentTimeMillis());
         int i = userDao.insert(user);
-        String result;
+        UserState result;
         if (i != 0) {
-            result = UserState.Success.name();
+            result = UserState.Success;
         } else {
-            result = UserState.Fail.name();
+            result = UserState.Fail;
         }
         return result;
     }
 
     @Override
-    public String userUpdate(UserVO userVO) {
+    public UserState userUpdate(UserVO userVO) {
         String password = userVO.getPassword();
         password = MD5.getMD5(password);
         User user = new User();
@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setChangetime(System.currentTimeMillis());
         int i = userDao.updateByPrimaryKeySelective(user);
-        String result;
+        UserState result;
         if (i != 0) {
-            result = UserState.Success.name();
+            result = UserState.Success;
         } else {
-            result = UserState.Fail.name();
+            result = UserState.Fail;
         }
         return result;
     }

@@ -18,21 +18,19 @@ public class LoginServiceImpl implements LoginService {
     LoginDao loginDao;
 
     @Override
-    public String compare(UserVO userVO) {
-        User user = new User();
-        user.setUsername(userVO.getUsername());
+    public LoginState compare(UserVO userVO) {
         try{
-            User findUser = loginDao.findUserByName(userVO.getUsername());
+            User user = loginDao.findUserByName(userVO.getUsername());
             String password = userVO.getPassword();
             password = MD5Util.generate(password);
-            String findPassword = findUser.getPassword();
+            String findPassword = user.getPassword();
             if (password.equals(findPassword)) {
-                return LoginState.Succed.name();
+                return LoginState.Success;
             }else{
-                return LoginState.Fail.name();
+                return LoginState.Fail;
             }
         }catch (Exception e){
-            return LoginState.Error.name();
+            return LoginState.Error;
         }
     }
 }

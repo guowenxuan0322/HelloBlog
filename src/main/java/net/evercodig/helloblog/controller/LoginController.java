@@ -1,5 +1,6 @@
 package net.evercodig.helloblog.controller;
 
+import net.evercodig.helloblog.common.LoginState;
 import net.evercodig.helloblog.pojo.UserVO;
 import net.evercodig.helloblog.service.LoginService;
 import org.slf4j.Logger;
@@ -19,9 +20,10 @@ public class LoginController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String login(@RequestBody UserVO userVO){
-        String result = loginService.compare(userVO);
-        logger.info("结果{}", result);
-        return result;
+        LoginState loginState = loginService.compare(userVO);
+
+        logger.info("结果{}", loginState.content);
+        return loginState.content;
 
     }
 }
