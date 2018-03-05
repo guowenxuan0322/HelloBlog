@@ -1,7 +1,5 @@
 package net.evercodig.helloblog.service.impl;
 
-
-import net.evercodig.helloblog.common.MD5;
 import net.evercodig.helloblog.common.MD5Util;
 import net.evercodig.helloblog.common.UserState;
 import net.evercodig.helloblog.dao.UserDao;
@@ -41,7 +39,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserState userUpdate(UserVO userVO) {
         String password = userVO.getPassword();
-        password = MD5.getMD5(password);
+        password = MD5Util.generate(password);
         User user = new User();
         user.setId(userVO.getId());
         user.setUsername(userVO.getUsername());

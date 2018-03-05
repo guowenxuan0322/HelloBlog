@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import net.evercodig.helloblog.service.UserService;
 
 
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -18,16 +17,17 @@ public class UserController {
     UserService UserService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String saveUser(@RequestBody UserVO userVO){
+    public String saveUser(@RequestBody UserVO userVO) {
         UserState userState = UserService.userSave(userVO);
-        logger.info("用户注册{}",userState.content);
+        logger.info("用户注册{}", userState.content);
         return userState.content;
     }
 
-    @RequestMapping(value = "/{id}" ,method = RequestMethod.PUT)
-    public String updateUser(@PathVariable Integer id, @RequestBody UserVO userVO){
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public String updateUser(@PathVariable Integer id, @RequestBody UserVO userVO) {
         UserState userState = UserService.userUpdate(userVO);
-        logger.info("用户注册{}", userState.content);
+
+        logger.info("id为{}：用户信息修改{}", id, userState.content);
         return userState.content;
     }
 }

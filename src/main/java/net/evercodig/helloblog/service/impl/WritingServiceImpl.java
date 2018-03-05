@@ -1,5 +1,6 @@
 package net.evercodig.helloblog.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import net.evercodig.helloblog.dao.WritingDao;
 import net.evercodig.helloblog.pojo.PageBean;
 import net.evercodig.helloblog.pojo.Writing;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @Service
 @Transactional
@@ -88,7 +90,7 @@ public class WritingServiceImpl implements WritingService {
         writingPageBean.setTotalCount(totalCount);
         writingPageBean.setTotalPage(totalPage);
         writingPageBean.setList(writings);
-        logger.info("分页查询实体{}", writingPageBean);
+        logger.info("分页查询实体{}", JSON.toJSONString(writingPageBean));
         return writingPageBean;
     }
 }

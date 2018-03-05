@@ -19,7 +19,7 @@ public class LoginController {
     LoginService loginService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String login(@RequestBody UserVO userVO){
+    public String login(@RequestBody UserVO userVO) {
         LoginState loginState = loginService.compare(userVO);
 
         logger.info("结果{}", loginState.content);

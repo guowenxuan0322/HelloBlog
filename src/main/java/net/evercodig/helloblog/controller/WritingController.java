@@ -4,6 +4,8 @@ import net.evercodig.helloblog.pojo.PageBean;
 import net.evercodig.helloblog.pojo.Writing;
 import net.evercodig.helloblog.pojo.WritingVO;
 import net.evercodig.helloblog.service.WritingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/writings")
 public class WritingController {
-
+    private static final Logger logger = LoggerFactory.getLogger(WritingController.class);
     @Autowired
     WritingService writingService;
 
@@ -41,6 +43,7 @@ public class WritingController {
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public PageBean<Writing> findPage(@RequestParam int page, @RequestParam int limit) {
         PageBean<Writing> writingPageBean = writingService.findPage(page, limit);
+        logger.info("Wring Pagebean{}", writingPageBean);
         return writingPageBean;
     }
 }
